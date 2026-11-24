@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مغامرة الضوء مع نور</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0E2747;--surface:#16365F;--ink:#F4F7FB;--muted:#B9C9E0;--accent:#3DD6C3;--on:#0E2747;--sun:#FFC93C;--good:#7BEBA6;--goodbg:#154a34;--bad:#FFB08F;--badbg:#5a2a1b;--line:#2c4e7d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#0E2747 linear-gradient(#0E2747,#16365F) fixed;color:var(--ink);font-family:'Tajawal',Arial,sans-serif;min-height:100vh;overflow-x:hidden;transition:background 1s}
+#sky{position:fixed;top:10px;left:14px;font-size:60px;animation:fl 4s ease-in-out infinite;pointer-events:none;opacity:.9}
+@keyframes fl{50%{transform:translateY(10px) rotate(8deg)}}
+#pyr{position:fixed;bottom:0;left:0;width:100%;height:90px;opacity:.28;pointer-events:none}
+#app{position:relative;max-width:720px;margin:0 auto;padding:14px 14px 110px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:3px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+h1{margin:0;font-size:34px;line-height:1.3;color:var(--sun)}h2{margin:0;font-size:23px;color:var(--sun)}
+p{margin:0;font-size:19px;line-height:1.8}.muted{color:var(--muted);font-size:16px}
+button{font:inherit;font-size:19px;font-weight:800;min-height:52px;border-radius:16px;border:0;background:var(--accent);color:var(--on);padding:10px 18px;cursor:pointer;box-shadow:0 5px 0 #1b8f82;transition:transform .1s}
+button:active{transform:translateY(4px);box-shadow:0 1px 0 #1b8f82}
+button.alt{background:transparent;color:var(--accent);border:2px solid var(--accent);box-shadow:none}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+input[type=text]{font:inherit;font-size:20px;padding:12px;border-radius:14px;border:3px solid var(--line);background:var(--bg);color:var(--ink);min-height:48px;text-align:center}
+.hud{position:sticky;top:0;z-index:5;background:var(--surface);border:3px solid var(--line);border-radius:18px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:6px;font-weight:800;font-size:17px;flex-wrap:wrap}
+.hud span{display:inline-flex;align-items:center;gap:3px}
+svg.i{width:22px;height:22px;fill:var(--sun)}svg.i.lost{fill:none;stroke:var(--muted);stroke-width:2}svg.h{fill:#FF6FA5}svg.h.lost{fill:none;stroke:var(--muted)}
+.pop{animation:pop .5s}@keyframes pop{40%{transform:scale(1.5);color:var(--sun)}}
+.bulbs{display:flex;justify-content:center;gap:10px;font-size:30px}.bulbs i{font-style:normal;filter:grayscale(1) brightness(.6);transition:.4s}.bulbs i.on{filter:drop-shadow(0 0 8px var(--sun));transform:scale(1.2)}
+.tw{background:var(--line);border-radius:8px;overflow:hidden}#tb{height:12px;background:linear-gradient(90deg,#FF6FA5,var(--sun));transition:width .1s linear}
+.opt{display:flex;gap:12px;align-items:center;text-align:start;justify-content:flex-start;background:#21497c;color:var(--ink);box-shadow:0 5px 0 #0c2140;min-height:62px;width:100%}
+.opt b{background:var(--sun);color:var(--on);border-radius:50%;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.opt.good{background:var(--goodbg);outline:3px solid var(--good)}.opt.bad{background:var(--badbg);outline:3px solid var(--bad);animation:sh .4s}.opt.gone{opacity:.25}
+@keyframes sh{25%{transform:translateX(8px)}75%{transform:translateX(-8px)}}
+.say{display:flex;gap:12px;align-items:center}.bub{background:var(--bg);border:2px solid var(--line);border-radius:18px;padding:10px 14px;font-weight:800;font-size:18px;flex:1}
+.mas{width:80px;height:80px;flex:none}.mas.hop{animation:hop .6s}.big{width:150px;height:150px;align-self:center;animation:fl 3s infinite}
+@keyframes hop{30%{transform:translateY(-20px) rotate(-6deg)}60%{transform:none}}
+.fb{border-radius:16px;padding:14px;font-size:18px;line-height:1.7}.fb.g{background:var(--goodbg);border:2px solid var(--good)}.fb.b{background:var(--badbg);border:2px solid var(--bad)}
+.lvl{display:flex;gap:10px;align-items:center;justify-content:space-between;width:100%}.lvl.lock{background:#3a4a62;color:var(--muted);box-shadow:none}
+.lvl.new{animation:fl 2s infinite}
+.art{font-size:84px;text-align:center;line-height:1}
+.cf,.fly{position:fixed;pointer-events:none}.cf{top:-20px;width:10px;height:16px;border-radius:2px;animation:fall 2.6s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.fly{left:0;right:0;top:35%;text-align:center;font-size:36px;font-weight:800;color:var(--sun);text-shadow:0 2px 0 #000;animation:up 1.1s forwards;z-index:9}
+@keyframes up{to{transform:translateY(-90px);opacity:0}}
+.cert{border:5px double var(--sun);text-align:center;align-items:center}
+.chest{font-size:90px;background:none;box-shadow:none;animation:fl 1.2s infinite;min-height:0}
+#bs{width:100%;background:#0b1b3a;border-radius:16px}input[type=range]{width:100%;height:36px;accent-color:var(--sun)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="sky">🌅</div>
+<svg id="pyr" viewBox="0 0 400 90" preserveAspectRatio="none" aria-hidden="true"><path d="M20 90L90 20L160 90Z M120 90L210 8L300 90Z M260 90L320 35L390 90Z" fill="#FFC93C"/><path d="M0 84q50-10 100 0t100 0t100 0t100 0V90H0Z" fill="#3DD6C3"/></svg>
+<main id="app"></main>
+<script>
+// ===== بيانات اللعبة: كلها من الفصل الرابع «خصائص الضوء» في كتاب العلوم =====
+// شكل السؤال: [النص، [3 اختيارات]، رقم الصحيح (0-2)، الشرح]
+const L=[
+{n:'مصادر الضوء',e:'🔦',need:3,mini:'sort',
+fact:'القمر يبدو مضيئًا، لكنه ليس مصدرًا للضوء لأنه يعكس ضوء الشمس الساقط عليه!',
+cards:[['🌙','فكّر: هل تتوقع أن ترى ما داخل الغرفة عند انطفاء المصباح؟ لا! لا يمكنك رؤية الأشياء حولك بدون الضوء.'],
+['💡','الضوء إحدى صور الطاقة التي تساعدنا على رؤية الأشياء. ومصادر الضوء هي الأجسام التي ينبعث منها ضوؤها الخاص.'],
+['☀️','مصادر طبيعية توجد في الطبيعة دون تدخل الإنسان: الشمس والنجوم. ومصادر صناعية يصنعها الإنسان: الشمعة والكشّاف والمصباح الكهربي.']],
+qs:[['الضوء هو إحدى صور:',['المادة','الطاقة','الماء'],1,'الضوء إحدى صور الطاقة التي تساعدنا على رؤية الأشياء.'],
+['أيّ هذه مصدر طبيعي للضوء؟',['الشمس','الشمعة','الكشّاف'],0,'الشمس توجد في الطبيعة دون تدخل الإنسان.'],
+['أيّ هذه مصدر صناعي للضوء؟',['النجوم','المصباح الكهربي','الشمس'],1,'المصباح الكهربي يصنعه الإنسان ليحصل على الضوء.'],
+['لماذا لا يُعتبر القمر مصدرًا للضوء؟',['لأنه صغير','لأنه بعيد','لأنه يعكس ضوء الشمس'],2,'القمر لا ينبعث منه ضوء خاص، بل يعكس ضوء الشمس.'],
+['مصدر الضوء هو جسم:',['ينبعث منه ضوؤه الخاص','يعكس الضوء فقط','يحجب الضوء'],0,'مصادر الضوء هي الأجسام التي ينبعث منها ضوؤها الخاص.']]},
+{n:'الضوء يسير في خطوط مستقيمة',e:'🌈',need:3,
+fact:'رشّ النشا أو رذاذ الماء في مسار الكشّاف يجعلك ترى مسار الضوء كأنه شعاع!',
+cards:[['💦','ينتقل الضوء من مصدره في خطوط مستقيمة. ونرى ذلك عندما نرشّ رذاذًا خفيفًا من الماء أو النشا في المكان الذي يمرّ به الضوء.'],
+['🧱','ينتقل ضوء الشمس في خط مستقيم ما لم يعترض مساره جسم. والضوء المنعكس عن المرآة ينتقل أيضًا في خطوط مستقيمة، ويمكن تغيير اتجاهه بمرآة.']],
+qs:[['يسير الضوء في خطوط:',['متعرجة','دائرية','مستقيمة'],2,'الضوء يسير في خطوط مستقيمة.'],
+['لماذا نرشّ رذاذ الماء أو النشا في مسار الضوء؟',['لنرى مسار الضوء','لنطفئ الضوء','لنجعل الضوء ساخنًا'],0,'عند الرش نتمكن من رؤية مسار الضوء بشكل خافت.'],
+['وضعنا ورقًا مقوّى أمام الكشّاف. هل يصل الضوء إلى الحائط؟',['نعم، أقوى','لا، لأن الورق يحجبه','نعم، دائمًا'],1,'الضوء يسير في خط مستقيم فيحجبه الجسم الذي يعترض طريقه.'],
+['الضوء المنعكس عن المرآة ينتقل في:',['خط مستقيم','خطوط متعرجة','دوائر'],0,'الضوء المنعكس ينتقل أيضًا في خطوط مستقيمة.'],
+['ينتقل ضوء الشمس في خط مستقيم ما لم:',['نغلق أعيننا','يعترض مساره جسم','يمرّ الوقت'],1,'اعتراض جسم لمسار الضوء يحجبه.']]},
+{n:'انعكاس الضوء',e:'🪞',need:4,mini:'beam',
+fact:'الحائط يعكس الضوء أيضًا، لكن بشكل غير منتظم، ولهذا لا نرى صورتنا فيه!',
+cards:[['🪞','انعكاس الضوء: ارتداد الضوء عندما يسقط على سطح جسم ما، مثل المرآة. فيرتدّ عن الجسم وينعكس في خط مستقيم.'],
+['✨','الانعكاس المنتظم: يرتدّ الضوء في اتجاه واحد عندما يسقط على سطح أملس ولامع، مثل المرآة والمعادن اللامعة.'],
+['🧱','الانعكاس غير المنتظم: يتشتت الضوء في اتجاهات مختلفة عندما يسقط على سطح خشن، مثل الحائط والخشب والورق والملابس.']],
+qs:[['ارتداد الضوء عندما يسقط على سطح جسم ما يسمى:',['انعكاس الضوء','انكسار','ظل'],0,'هذا هو تعريف انعكاس الضوء.'],
+['الضوء ينعكس بشكل منتظم على سطح:',['خشن','أملس ولامع','مظلم'],1,'السطح الأملس اللامع يعكس الضوء في اتجاه واحد.'],
+['أيّ هذه تشتّت الضوء في اتجاهات مختلفة؟',['الحائط','المرآة','المعدن اللامع'],0,'الحائط سطح خشن فيحدث انعكاس غير منتظم.'],
+['لماذا نرى صورتنا في المرآة؟',['لأنها تصنع ضوءًا','لأنها سطح أملس لامع يعكس الضوء في اتجاه واحد','لأنها كبيرة'],1,'المرآة سطح أملس لامع يعكس الضوء بشكل منتظم.'],
+['لا نرى صورتنا في ورقة بيضاء لأن الورقة:',['خشنة تشتّت الضوء','تصنع ضوءًا','سوداء'],0,'سطحها خشن يشتّت الضوء في اتجاهات مختلفة بشكل غير منتظم.']]},
+{n:'أمان المرايا',e:'🛡️',need:4,
+fact:'تتبّع الضوء: ضع مرآة ثانية وثالثة لينعكس الضوء إلى مسافة أبعد!',
+cards:[['👁️','لا توجّه ضوء الشمس المنعكس إلى عينيك، لأنه قد يؤذي عينيك أو يسبب لها أضرارًا.'],
+['🏫','ولا توجّه ضوء الشمس المنعكس نحو وجوه الأشخاص أو نوافذ الفصول، لتجنّب تشتيت الطلاب. وجّهه دائمًا إلى هدف في الظل.']],
+qs:[['لماذا لا نوجّه الضوء المنعكس إلى عيوننا؟',['قد يؤذي العين','يجعلها أجمل','لا يحدث شيء'],0,'الضوء المنعكس قد يؤذي العين أو يسبب لها أضرارًا.'],
+['لا نوجّه الضوء المنعكس نحو نوافذ الفصول لـ:',['توفير الكهرباء','تلوين الحائط','تجنّب تشتيت الطلاب'],2,'حتى لا ينشغل الطلاب عن الدرس.'],
+['في تجربة المرايا، أين نوجّه الضوء المنعكس؟',['إلى وجه زميلي','إلى هدف في الظل','إلى عيني'],1,'نوجّهه إلى هدف موجود في الظل.'],
+['أدوات نشاط «تتبّع الضوء»:',['كرة وحبل','قلم وممحاة','مرآة وحائط ومسحوق ناعم'],2,'مرآة وحائط ومسحوق ناعم.'],
+['لينعكس الضوء إلى مسافة أبعد نستخدم:',['مرآة ثانية وثالثة','ورقة بيضاء','قطعة قماش'],0,'تتابع المرايا يغيّر اتجاه الضوء إلى مسافة أبعد.']]},
+{n:'تحدّي الفصل',e:'🌞',need:4,
+fact:'الأرض في الأماكن المشمسة أعلى حرارة منها في الأماكن الظليلة!',
+cards:[['🔍','العدسة المكبرة تجمّع ضوء الشمس، فتزداد شدة الإضاءة ودرجة الحرارة عند نقطة التجميع. لذلك نستخدمها بحذر.'],
+['🌳','يتكوّن الظل عندما يعترض جسم الضوء. ويتغيّر طول الظل واتجاهه خلال اليوم تبعًا لحركة الشمس. والأماكن المشمسة أعلى حرارة من الظليلة. ونحدّد الاتجاهات بالبوصلة 🧭.']],
+qs:[['العدسة المكبرة تجمّع ضوء الشمس فتزداد:',['البرودة','لا شيء','شدة الإضاءة ودرجة الحرارة'],2,'تجميع الضوء يزيد الإضاءة والحرارة.'],
+['يتكوّن الظل عندما:',['يعترض جسم مسار الضوء','يمرّ الضوء بحرية','نطفئ الشمس'],0,'الجسم الذي يحجب الضوء يكوّن ظلًا خلفه.'],
+['يتغيّر طول الظل خلال اليوم بسبب:',['حركة الشمس','لون الجسم','حجم الغرفة'],0,'تتغير مواضع الشمس فيتغير طول الظل واتجاهه.'],
+['درجة حرارة الأرض في المكان المشمس تكون:',['أقل من الظليل','أعلى من الظليل','مثل الظليل'],1,'الشمس تسخّن الأرض أكثر من المكان الظليل.'],
+['نحدّد الاتجاهات باستخدام:',['البوصلة','الميزان','المسطرة'],0,'البوصلة تحدد الشمال والجنوب والشرق والغرب.']]}
+];
+const WIN=['برافو عليك!','عاش يا بطل!','شاطر أوي!','عالِم صغير بجد!','جامد جدًا!','يا سلام!'];
+const LOSE=['معلش، حاول تاني!','ولا يهمك، كل عالِم بيغلط ويتعلّم!','قريب أوي، كمّل!'];
+const BADGE=['🔦 مكتشف المصادر','🌈 راكب الشعاع','🪞 صائد الانعكاس','🛡️ حارس الأمان','🌞 صديق الضوء'];
+const RANK=['مبتدئ 🔦','مستكشف 🧭','راكب الشعاع 🌈','صائد الظلال 🌓','عالِم 🔬','عالِم الضوء الصغير 👑'];
+const SCENE=['linear-gradient(#ff8a65,#ffc93c 35%,#2c6aa5)','linear-gradient(#5ac8fa,#a8e6ff 45%,#2c6aa5)','linear-gradient(#3b82c4,#16365F)','linear-gradient(#5b3f9e,#16365F)','linear-gradient(#0b1b3a,#16365F)'],SUN=['🌅','☀️','🌤️','🌇','🌙'];
+const SORT=[['الشمس','☀️',0],['الشمعة','🕯️',1],['القمر','🌙',2],['النجوم','⭐',0],['الكشّاف','🔦',1],['المصباح الكهربي','💡',1]];
+const LET=['أ','ب','ج'];
+// ===== أدوات =====
+const $=id=>document.getElementById(id),pick=a=>a[Math.floor(Math.random()*a.length)],shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const star=l=>`<svg class="i${l?' lost':''}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 7 7 .6-5.3 4.6 1.7 7.3L12 17.8 5.6 21.5l1.7-7.3L2 9.6 9 9z"/></svg>`;
+const heart=l=>`<svg class="i h${l?' lost':''}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>`;
+function mas(m,c=''){const mo={happy:'<path d="M22 42q10 9 20 0" fill="none" stroke="#14263f" stroke-width="3" stroke-linecap="round"/>',cheer:'<path d="M22 40q10 16 20 0z" fill="#14263f"/>',sad:'<path d="M22 47q10-9 20 0" fill="none" stroke="#14263f" stroke-width="3" stroke-linecap="round"/>'}[m];
+return `<svg class="mas ${c}" viewBox="0 0 64 64" role="img" aria-label="نور"><path d="M8 64q4-14 24-14t24 14z" fill="#fff"/><circle cx="32" cy="34" r="24" fill="#FFD166" stroke="#14263f" stroke-width="3"/><path d="M12 22q20-22 40 0" fill="#14263f"/><circle cx="23" cy="32" r="6" fill="#fff" stroke="#14263f" stroke-width="2.5"/><circle cx="41" cy="32" r="6" fill="#fff" stroke="#14263f" stroke-width="2.5"/><circle cx="23" cy="33" r="2.5" fill="#14263f"/><circle cx="41" cy="33" r="2.5" fill="#14263f"/><circle cx="15" cy="41" r="3.5" fill="#FF8A8A" opacity=".6"/><circle cx="49" cy="41" r="3.5" fill="#FF8A8A" opacity=".6"/>${mo}</svg>`}
+// الصوت (Web Audio بدون ملفات)
+let ac=null,mute=false;
+function tone(fs,d=.14){if(mute)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();fs.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type='triangle';g.gain.value=.12;o.connect(g);g.connect(ac.destination);const t=ac.currentTime+i*d;o.start(t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.stop(t+d)})}catch(e){}}
+function confetti(n=70){const c=['#F5A400','#3DD6C3','#FF6FA5','#5BA8FF','#9BE564'];for(let i=0;i<n;i++){const s=document.createElement('span');s.className='cf';s.style.left=Math.random()*100+'vw';s.style.background=pick(c);s.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3600)}}
+function fly(t){const d=document.createElement('div');d.className='fly';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),1200)}
+function scene(i){document.body.style.background=i<0?'#0E2747 linear-gradient(#0E2747,#16365F) fixed':SCENE[i]+' fixed';$('sky').textContent=i<0?'🌅':SUN[i]}
+// ===== الحالة =====
+let S={name:'',score:0,stars:[0,0,0,0,0],open:1,lv:0,qi:0,hearts:3,maxH:3,extra:0,ok:0,wrong:0,streak:0,qs:[],miss:[],hint:false,t0:0,timer:null,locked:false,pw:{hint:1,time:1}};
+let best=0;try{best=+localStorage.getItem('lightBest')||0}catch(e){}
+const ts=()=>S.stars.reduce((a,b)=>a+b,0),rank=()=>RANK[[0,2,5,8,11,14].filter(x=>ts()>=x).length-1];
+const show=h=>{$('app').innerHTML=h;window.scrollTo(0,0)};
+function add(n){S.score+=n;const e=$('sc');if(e){e.textContent=S.score;e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}fly('+'+n)}
+const hud=()=>`<div class="hud"><span>${star()} ${ts()}</span><span>⭐ <b id="sc">${S.score}</b></span><span aria-label="القلوب">${[...Array(S.maxH)].map((_,i)=>heart(i>=S.hearts)).join('')}</span>${S.streak>=3?'<span>🔥×2</span>':''}<span class="muted">${rank()}</span><button class="alt" style="min-height:38px;font-size:14px;padding:2px 10px" onclick="mute=!mute;this.textContent=mute?'🔇':'🔊'">${mute?'🔇':'🔊'}</button></div>`;
+// ===== الشاشات =====
+function home(){clearInterval(S.timer);scene(-1);show(`<div class="card" style="align-items:center;text-align:center">${mas('happy','big')}<h1>مغامرة الضوء مع نور</h1><p>أنا نور! يلّا نتعلّم «خصائص الضوء» ونجمع النجوم والجوائز معًا 🎁</p><input type="text" id="nm" placeholder="اكتب اسمك" aria-label="اسمك" maxlength="20" style="width:80%"><button onclick="start()">يلّا نبدأ 🚀</button>${best?`<p class="muted">🏆 رقمك القياسي: ${best}</p>`:''}</div>`)}
+function start(){S.name=($('nm').value||'').trim()||'يا بطل';tone([523,659]);map()}
+function map(){S.hearts=S.maxH=3+S.extra;scene(-1);const nx=Math.min(S.open,5)-1;
+show(`${hud()}<div class="card"><div class="say">${mas('happy')}<div class="bub">أهلًا ${esc(S.name)}! رتبتك: ${rank()}. اختر بابًا من أبواب الضوء.</div></div></div>${L.map((l,i)=>{const lock=i>=S.open;return `<button class="lvl ${lock?'lock':'opt'} ${i===nx&&!S.stars[i]?'new':''}" ${lock?'disabled':''} onclick="lesson(${i})"><span>${lock?'🔒':l.e} المستوى ${i+1}: ${l.n}</span><span>${[0,1,2].map(k=>star(k>=S.stars[i])).join('')}</span></button>`}).join('')}<p class="muted" style="text-align:center">🎁 افتح صندوق الجوائز بعد كل مستوى تنجح فيه!</p>`)}
+function lesson(i,k=0){S.lv=i;const l=L[i],last=k>=l.cards.length-1;scene(i);
+show(`${hud()}<div class="card"><h2>${l.e} المستوى ${i+1}: ${l.n}</h2><div class="art">${l.cards[k][0]}</div><div class="say">${mas('happy')}<div class="bub">بطاقة ${k+1} من ${l.cards.length}</div></div><p>${l.cards[k][1]}</p><button onclick="${last?(l.mini?`mini(${i})`:'play()'):`lesson(${i},${k+1})`}">${last?(l.mini?'لعبة صغيرة 🎮':'ابدأ الأسئلة'):'التالي'}</button>${last?'<button class="alt" onclick="play()">تخطَّ إلى الأسئلة</button>':''}<button class="alt" onclick="map()">رجوع</button></div>`)}
+// ===== لعبة صغيرة: صنّف المصادر / وجّه الشعاع =====
+let M={};
+function mini(i){L[i].mini==='sort'?(M={i:0,ok:0},sortQ()):beam()}
+function sortQ(){if(M.i>=SORT.length){tone([523,659,784]);confetti(40);return show(`${hud()}<div class="card" style="text-align:center;align-items:center">${mas('cheer','big hop')}<h2>أحسنت! صنّفت ${M.ok} من ${SORT.length} بشكل صحيح</h2><button onclick="play()">ابدأ الأسئلة</button></div>`)}
+const it=SORT[M.i];show(`${hud()}<div class="card" style="text-align:center"><h2>🎮 صنّف المصادر (${M.i+1}/${SORT.length})</h2><div class="art">${it[1]}</div><h1>${it[0]}</h1><button class="opt" style="justify-content:center" onclick="sortA(0)">🌿 مصدر طبيعي</button><button class="opt" style="justify-content:center" onclick="sortA(1)">🏭 مصدر صناعي</button><button class="opt" style="justify-content:center" onclick="sortA(2)">🪞 ليس مصدرًا (يعكس الضوء)</button><div id="sf" aria-live="polite"></div></div>`)}
+function sortA(k){const it=SORT[M.i],ok=k===it[2];document.querySelectorAll('.opt').forEach(b=>b.disabled=true);if(ok){M.ok++;add(5);tone([660,880])}else tone([220,170],.2);
+$('sf').innerHTML=`<div class="fb ${ok?'g':'b'}"><b>${ok?pick(WIN):pick(LOSE)}</b><br>${it[2]===2?'القمر يعكس ضوء الشمس!':['طبيعي: يوجد في الطبيعة.','صناعي: صنعه الإنسان.'][it[2]]}</div>`;setTimeout(()=>{M.i++;sortQ()},1300)}
+function beam(){M={t:100+Math.floor(Math.random()*70),done:0};show(`${hud()}<div class="card"><h2>🎮 وجّه الشعاع</h2><p>أدِر المرآة لينعكس ضوء الكشّاف على الهدف 🎯 (الضوء ينعكس في خط مستقيم).</p><svg id="bs" viewBox="0 0 300 200" role="img" aria-label="مرآة وكشاف وهدف"><g id="bg"></g></svg><input type="range" id="rg" min="0" max="180" value="90" dir="ltr" oninput="bm(+this.value)" aria-label="زاوية المرآة"><div id="bf" aria-live="polite"></div><button class="alt" onclick="play()">${'تخطَّ'}</button></div>`);bm(90)}
+function bm(v){const r=d=>d*Math.PI/180,cx=150,cy=150,a=r(2*v),t=r(2*M.t),tx=cx+120*Math.cos(t),ty=cy+120*Math.sin(t),dx=Math.cos(r(v))*28,dy=Math.sin(r(v))*28,hit=Math.abs(v-M.t)<4;
+$('bg').innerHTML=`<text x="6" y="160" font-size="30">🔦</text><line x1="40" y1="150" x2="150" y2="150" stroke="#FFC93C" stroke-width="4"/><line x1="150" y1="150" x2="${cx+220*Math.cos(a)}" y2="${cy+220*Math.sin(a)}" stroke="#FFC93C" stroke-width="4"/><line x1="${cx-dx}" y1="${cy-dy}" x2="${cx+dx}" y2="${cy+dy}" stroke="#bfe9ff" stroke-width="8" stroke-linecap="round"/><text x="${tx-14}" y="${ty+10}" font-size="30">${hit?'🌟':'🎯'}</text>`;
+if(hit&&!M.done){M.done=1;tone([523,659,784,1047],.12);confetti(40);add(15);$('bf').innerHTML=`<div class="fb g"><b>أصبت الهدف! ${pick(WIN)}</b><br>غيّرنا اتجاه الضوء بمرآة، وانتقل في خط مستقيم. <button style="margin-top:8px;width:100%" onclick="play()">ابدأ الأسئلة</button></div>`}}
+// ===== الأسئلة =====
+function play(){const l=L[S.lv];scene(S.lv);Object.assign(S,{qs:shuf(l.qs),qi:0,hearts:S.maxH,ok:0,wrong:0,streak:0,miss:[]});ask()}
+function ask(){const q=S.qs[S.qi];S.hint=false;S.locked=false;S.opts=shuf([0,1,2]);
+show(`${hud()}<div class="bulbs" aria-label="سؤال ${S.qi+1} من 5">${[0,1,2,3,4].map(i=>`<i class="${i<S.ok?'on':''}">💡</i>`).join('')}</div><div class="tw"><div id="tb" style="width:100%"></div></div>
+<div class="card"><div class="muted">${L[S.lv].e} ${L[S.lv].n} · سؤال ${S.qi+1} من 5</div><div class="say"><span id="mas">${mas('happy')}</span><div class="bub" id="say">${esc(q[0])}</div></div>
+${S.opts.map((o,n)=>`<button class="opt" id="o${n}" onclick="ans(${n})"><b>${LET[n]}</b>${q[1][o]}</button>`).join('')}
+<div style="display:flex;gap:8px"><button class="alt" id="hb" style="flex:1" onclick="hint()">💡 تلميح (${S.pw.hint>0?'مجاني ×'+S.pw.hint:'−3 نقاط'})</button>${S.pw.time>0?`<button class="alt" id="tb2" style="flex:1" onclick="S.t0+=10000;S.pw.time--;this.remove()">⏳ +10 ثوانٍ</button>`:''}</div><div id="fb" aria-live="polite"></div></div>`);
+S.t0=Date.now();clearInterval(S.timer);S.timer=setInterval(()=>{const r=Math.min(1,1-(Date.now()-S.t0)/25000);$('tb').style.width=Math.max(r,0)*100+'%';if(r<=0)ans(-1)},100)}
+function hint(){if(S.hint||S.locked)return;S.hint=true;if(S.pw.hint>0)S.pw.hint--;else S.score=Math.max(0,S.score-3);const q=S.qs[S.qi],r=pick(S.opts.map((o,n)=>[o,n]).filter(x=>x[0]!==q[2]));$('o'+r[1]).classList.add('gone');$('o'+r[1]).disabled=true;$('hb').disabled=true}
+function ans(n){if(S.locked)return;S.locked=true;clearInterval(S.timer);const q=S.qs[S.qi],ok=n>=0&&S.opts[n]===q[2],sec=(Date.now()-S.t0)/1000;
+S.opts.forEach((o,k)=>{const b=$('o'+k);b.disabled=true;if(o===q[2]){b.classList.add('good');b.insertAdjacentHTML('beforeend',' ✓ الصحيحة')}});
+const tb=$('tb2');if(tb)tb.remove();let msg;
+if(ok){S.ok++;S.streak++;let g=10+(sec<=10?5:0);if(S.streak>=3)g*=2;msg=pick(WIN);tone([660,880]);confetti(14);
+$('fb').innerHTML=`<div class="fb g"><b>✓ ${msg}</b> +${g} نقطة${sec<=10?' ⚡ سرعة':''}${S.streak>=3?' 🔥 شعلة الكومبو ×2!':''}<br>${q[3]}</div>`;add(g)}
+else{S.wrong++;S.hearts--;S.streak=0;S.miss.push(q[0]);msg=n<0?'انتهى الوقت! ولا يهمك.':pick(LOSE);tone([220,170],.2);if(n>=0){$('o'+n).classList.add('bad');$('o'+n).insertAdjacentHTML('beforeend',' ✗')}
+$('fb').innerHTML=`<div class="fb b"><b>✗ ${msg}</b><br>${q[3]}</div>`}
+$('mas').innerHTML=mas(ok?'cheer':'sad',ok?'hop':'');$('say').textContent=msg;$('hb').remove();
+const end=S.hearts<=0||S.qi>=4;$('fb').insertAdjacentHTML('beforeend',`<button style="margin-top:10px;width:100%" onclick="${end?'finish()':'S.qi++;ask()'}">${end?'شوف النتيجة 🎉':'التالي'}</button>`)}
+function finish(){const l=L[S.lv],pass=S.ok>=l.need&&S.hearts>0;
+if(pass){const st=S.wrong===0?3:S.wrong===1?2:1,first=!S.stars[S.lv];S.stars[S.lv]=Math.max(S.stars[S.lv],st);S.open=Math.min(5,Math.max(S.open,S.lv+2));S.score+=st*20;if(S.score>best){best=S.score;try{localStorage.setItem('lightBest',best)}catch(e){}}
+if(S.stars.every(x=>x>0))return final();
+confetti();tone([523,659,784,1047],.15);
+show(`${hud()}<div class="card" style="align-items:center;text-align:center">${mas('cheer','big hop')}<h1>نجحت في المستوى ${S.lv+1}!</h1><div>${[0,1,2].map(k=>star(k>=st)).join('')}</div><p>أجبت ${S.ok} من 5 · مكافأة النجوم +${st*20} ⭐</p><p><b>شارة جديدة: ${BADGE[S.lv]}</b></p><div class="fb g">💡 هل تعلم؟ ${l.fact}</div><div id="ch"><button class="chest" onclick="chest()" aria-label="افتح الصندوق">🎁</button><p>اضغط لتفتح صندوق الجوائز!</p></div><button onclick="map()">${S.lv<4?'المستوى التالي ▶':'الخريطة'}</button></div>`)}
+else{if(S.score>best){best=S.score;try{localStorage.setItem('lightBest',best)}catch(e){}}
+tone([300,240,200],.22);show(`${hud()}<div class="card" style="align-items:center;text-align:center">${mas('sad','big')}<h1>لم تنجح هذه المرة</h1><p>أجبت ${S.ok} من 5، والمطلوب ${l.need}. ${pick(LOSE)}</p>${S.miss.length?`<div class="fb b" style="text-align:start"><b>راجع هذه الأسئلة:</b><br>${S.miss.slice(0,3).map(esc).join('<br>')}</div>`:''}<p class="muted">نصيحة: اقرأ البطاقات مرة ثانية، وستنجح بإذن الله 💪</p><button onclick="play()">حاول تاني</button><button class="alt" onclick="lesson(${S.lv})">راجع الدرس</button><button class="alt" onclick="map()">الخريطة</button></div>`)}}
+function chest(){const R=[['+25 نقطة ⭐',()=>S.score+=25],['تلميح مجاني 💡',()=>S.pw.hint++],['+10 ثوانٍ ⏳ لسؤال',()=>S.pw.time++],['قلب إضافي ❤️ في المستوى القادم',()=>S.extra=1]],r=pick(R);r[1]();confetti(50);tone([784,988,1319],.12);$('ch').innerHTML=`<div class="art">🎉</div><h2>ربحت: ${r[0]}</h2>`}
+function final(){confetti(120);setTimeout(()=>confetti(100),1200);tone([523,659,784,1047,1319],.15);scene(4);
+show(`<div class="card cert">${mas('cheer','big hop')}<div class="art">🏆</div><h1>عالِم الضوء الصغير</h1><p>مبروك يا <b>${esc(S.name)}</b>! أنهيت كل مستويات «خصائص الضوء».</p><p>⭐ النجوم: ${ts()} من 15 · النقاط: ${S.score}</p><p class="muted">${BADGE.join(' · ')}</p><p><b>جرّب في البيت:</b> اعكس ضوء الشمس بمرآة إلى هدف في الظل، ولا توجّهه إلى عيون أحد!</p><button onclick="S.score=0;S.stars=[0,0,0,0,0];S.open=1;S.extra=0;S.pw={hint:1,time:1};home()">العب من جديد</button></div>`)}
+home();
+</script>
+</body>
+</html>
